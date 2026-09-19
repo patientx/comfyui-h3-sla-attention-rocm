@@ -77,7 +77,7 @@ class H3SLAAttention(io.ComfyNode):
                         "cannot take 0.7+, this node has nothing to offer it. "
                         "0.0 disables sparsity without removing the node.")),
                 io.Combo.Input("block_size", options=list(BLOCK_SIZES),
-                    default="32",
+                    default="64",
                     tooltip=(
                         "How many sequence tokens share one key selection. "
                         "Unrelated to the model's 128-wide heads. This matters "
@@ -100,7 +100,7 @@ class H3SLAAttention(io.ComfyNode):
                         "clips, where block selection would cost more than it "
                         "saves. Lower it only if you know your sequence is "
                         "long enough to benefit.")),
-                io.Int.Input("dense_last_steps", default=1, min=0, max=8,
+                io.Int.Input("dense_last_steps", default=0, min=0, max=8,
                     optional=True,
                     tooltip=(
                         "Run the last N sampling steps at full attention. 0 "
@@ -134,7 +134,7 @@ class H3SLAAttention(io.ComfyNode):
                         "can fix prompt-following regressions without paying "
                         "for full attention on every step. Blank = none.")),
                 io.Combo.Input("dense_backend", options=list(DENSE_BACKENDS),
-                    default="comfy_kitchen", optional=True,
+                    default="auto", optional=True,
                     tooltip=(
                         "Attention kernel used on every dense fall-through "
                         "(short sequences, dense_last_steps, dense_steps). "
@@ -189,8 +189,8 @@ class H3SLAAttention(io.ComfyNode):
                     optional=True,
                     tooltip=(
                         "Applies the H3 block-stack residual cache before SLA, "
-                        "fixed settings: reuse_threshold 0.05, start_percent "
-                        "0.15, end_percent 0.90, max_steps 2, device auto, "
+                        "fixed settings: reuse_threshold 0.18, start_percent "
+                        "0.15, end_percent 0.95, max_steps 1, device auto, "
                         "verbose on.")),
                 io.Boolean.Input("reference_protection",
                     display_name="Protect Vid/Ref",
