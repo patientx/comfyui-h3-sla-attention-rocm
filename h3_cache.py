@@ -12,9 +12,9 @@ import comfy.model_prefetch
 import comfy.patcher_extension
 from comfy.ldm.minimax import model as minimax_model
 
-REUSE_THRESHOLD = 0.05
+REUSE_THRESHOLD = 0.15
 START_PERCENT = 0.15
-END_PERCENT = 0.90
+END_PERCENT = 0.95
 MAX_STEPS = 2
 DEVICE = "auto"
 VERBOSE = True
